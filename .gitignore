@@ -1,0 +1,11 @@
+/.idea/
+
+/config/nginx/*
+!/config/nginx/appstream.nginx.conf
+!/config/nginx/default.nginx.template
+
+/config/ssl/*
+!/config/ssl/.gitkeep
+/app/
+
+/.env
