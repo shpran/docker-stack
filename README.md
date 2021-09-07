@@ -1,4 +1,4 @@
-# Docker stack
+# Docker stack for Ecobit API
 
 ## Images
 * php:8.0.10-fpm
@@ -29,26 +29,23 @@
    |____...
    ```
 3. Make a copy of `.env.example` file and name it `.env`
-4. Configure all environment variables in `.env` file
+4. Configure all empty environment variables in `.env` file
 5. Run `docker-compose build`
 6. Run `docker-compose up -d`
-7. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
-   ```
-   127.0.0.1 test.docker.loc
-   ```
-8. Now you can open `https://[PROJECT_NAME].docker.loc` in your browser.
+7. Open `hosts` file and add new host `127.0.0.1 ecobit.docker.loc`
+8. Now you can open `https://ecobit.docker.loc` in your browser.
 
 ## Environment variables:
 | Variable | Example | Default |
 | -------- | ------- | ------- |
-| CONTAINER_PREFIX | local | - |
-| PROJECT_NAME | test | - |
-| TIMEZONE | Europe/Minsk | - |
+| CONTAINER_PREFIX | local | local |
+| PROJECT_NAME | test | ecobit |
+| TIMEZONE | Europe/Minsk | Europe/Minsk |
 | GITHUB_USER | user | - |
 | GITHUB_TOKEN | token | - |
 | GITHUB_EMAIL | test@test.com | - |
 | GITHUB_NAME | "Name Surname" | - |
-| XDEBUG_CLIENT_HOST | 192.168.1.1 | - |
+| XDEBUG_CLIENT_HOST | 192.168.1.1 | 192.168.1.1 |
 | MYSQL_ROOT_PASSWORD | root | root |
 | MYSQL_USER | dev | dev |
 | MYSQL_PASSWORD | dev | dev |
