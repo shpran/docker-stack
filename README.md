@@ -13,27 +13,27 @@
 * git
 
 ## Usage
-1. Clone this repo to your local machine
-2. Create an `app` directory and move necessary project inside. After this structure should be:
+1. Clone this repository to your local machine and go inside:
+   ```shell
+   $ git clone https://github.com/shpran/docker-stack ecobit-api -b project/ecobit-api
+   $ cd ecobit-api
    ```
-   docker-stack
-   |____app
-   |    |____... NECESSARY PROJECT FILES ...
-   |
-   |____config
-   |    |____...
-   |
-   |____scripts
-   |    |____...
-   |
-   |____...
+2. Clone ecobit-api repository to `app` folder:
+   ```shell
+   $ git clone https://github.com/shpran/ecobit-api app -b develop
    ```
-3. Make a copy of `.env.example` file and name it `.env`
+3. Make a copy of `.env.example` file and name it `.env`:
+   ```shell
+   $ cp .env.example .env
+   ```
 4. Configure all empty environment variables in `.env` file
-5. Run `docker-compose build`
-6. Run `docker-compose up -d`
-7. Open `hosts` file and add new host `127.0.0.1 ecobit.docker.loc`
-8. Now you can open `https://ecobit.docker.loc` in your browser.
+5. Build and run docker containers:
+   ```shell
+   $ docker-compose build
+   $ docker-compose up -d
+   ```
+6. Open `hosts` file and add new host `127.0.0.1 ecobit.docker.loc`
+7. Now you can open `https://ecobit.docker.loc` in your browser.
 
 ## Environment variables:
 | Variable | Example | Default |
