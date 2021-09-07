@@ -12,7 +12,7 @@
 * docker-compose
 * git
 
-## Usage
+## Installation
 1. Clone this repository to your local machine and go inside:
    ```shell
    $ git clone https://github.com/shpran/docker-stack ecobit-api -b project/ecobit-api
