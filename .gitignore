@@ -1,4 +1,7 @@
-.idea
-app
+/.idea/
 
-.env
+/config/ssl/
+!/config/ssl/.gitkeep
+/app/
+
+/.env

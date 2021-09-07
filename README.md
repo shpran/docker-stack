@@ -30,13 +30,18 @@
    ```
 3. Make a copy of `.env.example` file and name it `.env`
 4. Configure all environment variables in `.env` file
-5. Run `docker-compose build`
-6. Run `docker-compose up -d`
-7. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
+5. Install [mkcert](https://github.com/FiloSottile/mkcert#installation)
+6. Execute the following command to generate certificates:
+   ```shell
+   $ ./scripts/gencerts.sh
+   ```
+7. Run `docker-compose build`
+8. Run `docker-compose up -d`
+9. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
    ```
    127.0.0.1 test.docker.loc
    ```
-8. Now you can open `https://[PROJECT_NAME].docker.loc` in your browser.
+10. Now you can open `https://[PROJECT_NAME].docker.loc` in your browser.
 
 ## Environment variables:
 | Variable | Example | Default |
