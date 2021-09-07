@@ -27,13 +27,18 @@
    $ cp .env.example .env
    ```
 4. Configure all empty environment variables in `.env` file
-5. Build and run docker containers:
+5. Install [mkcert](https://github.com/FiloSottile/mkcert#installation)
+6. Execute the following command to generate certificates:
+   ```shell
+   $ ./scripts/gencerts.sh
+   ```
+7. Build and run docker containers:
    ```shell
    $ docker-compose build
    $ docker-compose up -d
    ```
-6. Open `hosts` file and add new host `127.0.0.1 ecobit.docker.loc`
-7. Now you can open `https://ecobit.docker.loc` in your browser.
+8. Open `hosts` file and add new host `127.0.0.1 ecobit.docker.loc`
+9. Now you can open `https://ecobit.docker.loc` in your browser.
 
 ## Environment variables:
 | Variable | Example | Default |
