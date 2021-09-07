@@ -75,7 +75,7 @@ services:
     ports:
       - 7000:8080
     volumes:
-      - ./app/src/Resources/swagger/api.yaml:/docs/api.yaml
+      - ./app/src/api.yaml:/docs/api.yaml
       - ./scripts/cp_swagger.sh:/usr/local/bin/cp_swagger.sh
       - ./scripts/set_server.sh:/usr/local/bin/set_server.sh
     command: /bin/sh -c "

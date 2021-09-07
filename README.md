@@ -66,3 +66,8 @@ docker exec -it local_mysql bash
 docker exec -it local_redis sh
 docker exec -it local_swagger sh
 ```  
+
+## Xdebug
+The functionality only gets activated when a specific trigger is present when the request starts.  
+The name of the trigger is `XDEBUG_TRIGGER`, and Xdebug checks for its presence in either `$_ENV` (environment variable), 
+`$_GET` or `$_POST` variable, or `$_COOKIE` (HTTP cookie name).  
