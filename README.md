@@ -1,7 +1,7 @@
 # Docker stack
 
 ## Images
-* php:8.0.9-fpm
+* php:8.0.10-fpm
 * nginx:1.21.1-alpine
 * mysql:8.0.26
 * redis:6.2.5-alpine
@@ -71,3 +71,12 @@ docker exec -it local_swagger sh
 The functionality only gets activated when a specific trigger is present when the request starts.  
 The name of the trigger is `XDEBUG_TRIGGER`, and Xdebug checks for its presence in either `$_ENV` (environment variable), 
 `$_GET` or `$_POST` variable, or `$_COOKIE` (HTTP cookie name).  
+
+## Swagger OpenAPI
+
+### How to access Swagger OpenAPI
+To access it go to `http://[PROJECT_NAME].docker.loc:7000` or `http://localhost:7000` page.
+
+### How to apply changes for swagger OpenAPI
+1. Run `./scripts/update.sh` to update swagger file inside Docker container
+2. Refresh the page.
