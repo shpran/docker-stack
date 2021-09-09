@@ -36,11 +36,11 @@
    ```shell
    $ docker-compose build && docker-compose up -d
    ```
-9. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
+8. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
    ```
    127.0.0.1 test.docker.loc
    ```
-10. Now you can open `https://[PROJECT_NAME].docker.loc` in your browser.
+9. Now you can open `https://[PROJECT_NAME].docker.loc` in your browser.
 
 ## Environment variables:
 | Variable | Example | Default |
