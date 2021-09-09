@@ -1,6 +1,6 @@
 /.idea/
 
-/config/ssl/
+/config/ssl/*
 !/config/ssl/.gitkeep
 /app/
 

@@ -13,30 +13,29 @@
 * git
 
 ## Usage
-1. Clone this repo to your local machine
-2. Create an `app` directory and move necessary project inside. After this structure should be:
+1. Clone this repository to your local machine and go inside:
+   ```shell
+   $ git clone https://github.com/shpran/docker-stack && cd docker-stack
    ```
-   docker-stack
-   |____app
-   |    |____... NECESSARY PROJECT FILES ...
-   |
-   |____config
-   |    |____...
-   |
-   |____scripts
-   |    |____...
-   |
-   |____...
+2. Create an `app` directory:
+   ```shell
+   $ mkdir app
    ```
-3. Make a copy of `.env.example` file and name it `.env`
+   Further you can store your symfony project inside this `app` folder.
+3. Make a copy of `.env.example` file and name it `.env`:
+   ```shell
+   $ cp .env.example .env
+   ```
 4. Configure all environment variables in `.env` file
 5. Install [mkcert](https://github.com/FiloSottile/mkcert#installation)
 6. Execute the following command to generate certificates:
    ```shell
    $ ./scripts/gencerts.sh
    ```
-7. Run `docker-compose build`
-8. Run `docker-compose up -d`
+7. Build and run docker containers:
+   ```shell
+   $ docker-compose build && docker-compose up -d
+   ```
 9. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
    ```
    127.0.0.1 test.docker.loc
@@ -80,7 +79,7 @@ The name of the trigger is `XDEBUG_TRIGGER`, and Xdebug checks for its presence 
 ## Swagger OpenAPI
 
 ### How to access Swagger OpenAPI
-To access it go to `http://[PROJECT_NAME].docker.loc:7000` or `http://localhost:7000` page.
+To access it go to `http://localhost:7000`.
 
 ### How to apply changes for swagger OpenAPI
 1. Run `./scripts/update.sh` to update swagger file inside Docker container
