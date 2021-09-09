@@ -52,7 +52,7 @@ ${BROWN}====================>>> Step 2: Certificates <<<====================
 ${PINK}Generating...${NC}
 "
 
-cd $SSL_FOLER;
+cd $SSL_FOLDER;
 mkcert "*.docker.loc";
 mkcert -install;
 cd -;
