@@ -15,8 +15,7 @@
 ## Installation
 1. Clone this repository to your local machine and go inside:
    ```shell
-   $ git clone https://github.com/shpran/docker-stack ecobit-api -b project/ecobit-api
-   $ cd ecobit-api
+   $ git clone https://github.com/shpran/docker-stack ecobit-api -b project/ecobit-api && cd ecobit-api
    ```
 2. Clone ecobit-api repository to `app` folder:
    ```shell
@@ -34,8 +33,7 @@
    ```
 7. Build and run docker containers:
    ```shell
-   $ docker-compose build
-   $ docker-compose up -d
+   $ docker-compose build && docker-compose up -d
    ```
 8. Open `hosts` file and add new host `127.0.0.1 ecobit.docker.loc`
 9. Now you can open `https://ecobit.docker.loc` in your browser.
@@ -77,7 +75,7 @@ The name of the trigger is `XDEBUG_TRIGGER`, and Xdebug checks for its presence 
 ## Swagger OpenAPI
 
 ### How to access Swagger OpenAPI
-To access it go to `http://[PROJECT_NAME].docker.loc:7000` or `http://localhost:7000` page.
+To access it go to `http://localhost:7000`.
 
 ### How to apply changes for swagger OpenAPI
 1. Run `./scripts/update.sh` to update swagger file inside Docker container
