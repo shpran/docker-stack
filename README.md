@@ -1,11 +1,11 @@
 # Docker stack
 
 ## Images
-* php:8.1.0-fpm
-* nginx:1.21.4-alpine
-* mysql:8.0.27
+* php:8.1.1-fpm
+* nginx:1.21.5-alpine
+* mysql:8.0.28
 * redis:6.2.6-alpine
-* swaggerapi/swagger-ui:v4.1.3
+* swaggerapi/swagger-ui:v4.2.1
 
 ## Requirements
 * docker
