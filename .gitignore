@@ -6,6 +6,11 @@
 
 /config/ssl/*
 !/config/ssl/.gitkeep
-/app/
 
+/services/mysql/*
+!/services/mysql/.gitkeep
+/services/redis/*
+!/services/redis/.gitkeep
+
+/app/
 /.env
