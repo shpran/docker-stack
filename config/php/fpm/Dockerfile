@@ -1,4 +1,4 @@
-FROM php:8.1.0-fpm
+FROM php:8.1.1-fpm
 
 ARG PROJECT_NAME
 
@@ -8,37 +8,24 @@ ARG GITHUB_EMAIL
 ARG GITHUB_NAME
 
 RUN apt update \
-    && apt upgrade -y \
     && apt install -y \
-        g++ \
-        libbz2-dev \
-        libc-client-dev \
-        libcurl4-gnutls-dev \
-        libedit-dev \
+        debian-archive-keyring \
+        libonig-dev \
+        libpng-dev \
+        libjpeg-dev \
         libfreetype6-dev \
-        libicu-dev \
-        libjpeg62-turbo-dev \
-        libkrb5-dev \
-        libldap2-dev \
-        libmagickwand-dev \
-        libmcrypt-dev \
-        libmemcached-dev \
         libpq-dev \
-        libsqlite3-dev \
-        libssl-dev \
-        libreadline-dev \
-        libxslt1-dev \
         libzip-dev \
-        memcached \
-        wget \
+        libzstd-dev \
         zip \
         unzip \
-        zlib1g-dev \
+        sudo \
         nano \
         git \
-        xfonts-75dpi \
-        xfonts-base \
-        libnss3-tools
+        wget \
+        curl \
+        libcurl4-gnutls-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer config --global github-protocols https \
@@ -47,9 +34,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -yq nodejs build-essential
-RUN npm install -g npm
+RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - \
+    && apt-get install -yq nodejs build-essential \
+    && npm install -g npm
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
+    && export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash \
     && mv git-completion.bash /usr/local/share/.git-completion.bash
@@ -65,39 +55,35 @@ RUN cat >> ~/.bashrc /usr/local/share/bashrc_config.txt \
     && /bin/bash -c 'source ~/.bashrc'
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install -j$(nproc) imap \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install -j$(nproc) intl \
-    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install ldap \
-    && docker-php-ext-install -j$(nproc) \
-        bcmath \
-        bz2 \
-        calendar \
-        exif \
-        gettext \
-        mysqli \
-        opcache \
-        pdo_mysql \
-        pdo_pgsql \
-        pgsql \
-        soap \
-        sockets \
-        xsl \
-        zip \
-        pcntl
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 
-RUN pecl install xdebug && docker-php-ext-enable xdebug \
-    && pecl install memcached && docker-php-ext-enable memcached \
-    && pecl install mongodb && docker-php-ext-enable mongodb \
-    && pecl install redis && docker-php-ext-enable redis \
-    && yes '' | pecl install imagick && docker-php-ext-enable imagick
+RUN pecl install \
+    igbinary \
+    redis \
+    xdebug
+
+RUN docker-php-ext-install pdo \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install opcache \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install curl \
+    && docker-php-ext-install calendar \
+    && docker-php-ext-install pcntl \
+    && docker-php-ext-install sockets \
+    && docker-php-ext-enable igbinary \
+    && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable redis
+
+RUN mkdir /var/www/tools
+RUN mkdir /var/www/tools/php-cs-fixer \
+    && composer require --working-dir=/var/www/tools/php-cs-fixer friendsofphp/php-cs-fixer
 
 RUN docker-php-source delete \
-    && apt-get remove -y g++ wget \
-    && apt-get autoremove --purge -y && apt-get autoclean -y && apt-get clean -y \
+    && apt remove -y wget \
+    && apt autoremove --purge -y \
+    && apt autoclean -y \
+    && apt clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* /var/tmp/*
 
