@@ -18,6 +18,7 @@ services:
             - ./config/php/fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
             - ./config/php/fpm/bashrc_config.txt:/usr/local/share/bashrc_config.txt
             - ./app:/var/www/${PROJECT_NAME}
+            - ./services/composer/cache:/root/.composer/cache
         environment:
             - PHP_IDE_CONFIG=serverName=${PROJECT_NAME}
             - TIMEZONE=${TIMEZONE}
@@ -28,18 +29,17 @@ services:
     nginx:
         restart: always
         container_name: ${CONTAINER_PREFIX}_nginx
-        image: nginx:1.21.5-alpine
-        env_file:
-            - .env
-        command: /bin/sh -c "
-            envsubst '$$PROJECT_NAME' < /etc/nginx/conf.d/default.nginx.template > /etc/nginx/conf.d/$PROJECT_NAME.nginx.conf
-            && exec nginx -g 'daemon off;'"
-        volumes:
-            - ./config/nginx:/etc/nginx/conf.d
-            - ./config/ssl:/etc/ssl
-            - ./app:/var/www/${PROJECT_NAME}
+        image: nginx:1.21.6-alpine
         ports:
             - '${NGINX_SSL_PORT}:443'
+        env_file:
+            - .env
+        volumes:
+            - ./config/nginx:/etc/nginx/templates
+            - ./config/ssl:/etc/ssl
+            - ./app:/var/www/${PROJECT_NAME}
+        environment:
+            - PROJECT_NAME=${PROJECT_NAME}
         networks:
             - default
 
@@ -47,13 +47,13 @@ services:
         restart: always
         container_name: ${CONTAINER_PREFIX}_mysql
         image: mysql:8.0.28
+        ports:
+            - '${MYSQL_PORT}:3306'
         env_file:
             - .env
         volumes:
             - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
             - ./services/mysql/data:/var/lib/mysql
-        ports:
-            - '${MYSQL_PORT}:3306'
         networks:
             - default
 
@@ -71,27 +71,18 @@ services:
         networks:
             - default
 
-#    swagger:
-#        restart: always
-#        container_name: ${CONTAINER_PREFIX}_swagger
-#        image: swaggerapi/swagger-ui:v4.2.1
-#        ports:
-#            - ${SWAGGER_PORT}:8080
-#        volumes:
-#            - ./app/src/api.yaml:/docs/api.yaml
-#            - ./scripts/cp_swagger.sh:/usr/local/bin/cp_swagger.sh
-#            - ./scripts/set_server.sh:/usr/local/bin/set_server.sh
-#        command: /bin/sh -c "
-#            ./usr/local/bin/cp_swagger.sh
-#            && ./usr/local/bin/set_server.sh
-#            && /usr/share/nginx/run.sh"
-#        environment:
-#            SERVER_URL: https://${PROJECT_NAME}.docker.loc:${NGINX_SSL_PORT}
-#            SWAGGER_NAME: api.yaml
-#            API_URL: api-docker.yaml
-#            SWAGGER_JSON: /docs/api-docker.yaml
-#        networks:
-#            - default
+    swagger:
+        restart: always
+        container_name: ${CONTAINER_PREFIX}_swagger
+        image: swaggerapi/swagger-ui:v4.2.1
+        ports:
+            - '${SWAGGER_PORT}:8080'
+        volumes:
+            - ./app:/var/www/${PROJECT_NAME}
+        environment:
+            - API_URL=${SWAGGER_API_URL}
+        networks:
+            - default
 
 networks:
     default:

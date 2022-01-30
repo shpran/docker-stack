@@ -7,10 +7,12 @@
 /config/ssl/*
 !/config/ssl/.gitkeep
 
-/services/mysql/*
-!/services/mysql/.gitkeep
-/services/redis/*
-!/services/redis/.gitkeep
+/services/composer/cache/*
+!/services/composer/cache/.gitkeep
+/services/mysql/data/*
+!/services/mysql/data/.gitkeep
+/services/redis/data/*
+!/services/redis/data/.gitkeep
 
 /app/
 /.env

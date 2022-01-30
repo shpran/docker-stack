@@ -1,4 +1,6 @@
-FROM php:8.1.1-fpm
+FROM php:8.1.2-fpm
+
+ENV CFLAGS="$CFLAGS -D_GNU_SOURCE"
 
 ARG PROJECT_NAME
 
@@ -27,15 +29,16 @@ RUN apt update \
         libcurl4-gnutls-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | sudo tee /etc/apt/sources.list.d/symfony-cli.list \
+    && apt update \
+    && apt install symfony-cli
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer config --global github-protocols https \
     && composer config --global process-timeout 0
 
-RUN wget https://get.symfony.com/cli/installer -O - | bash \
-    && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
-
 RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - \
-    && apt-get install -yq nodejs build-essential \
+    && apt install -yq nodejs build-essential \
     && npm install -g npm
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
     && export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" \
