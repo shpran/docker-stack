@@ -43,23 +43,24 @@
 9. Now you can open `https://[PROJECT_NAME].docker.loc:[NGINX_SSL_PORT]` in your browser.
 
 ## Environment variables:
-| Variable            | Example        | Default             |
-|---------------------|----------------|---------------------|
-| CONTAINER_PREFIX    | local          | -                   |
-| PROJECT_NAME        | test           | -                   |
-| TIMEZONE            | Europe/Minsk   | -                   |
-| GITHUB_USER         | user           | -                   |
-| GITHUB_TOKEN        | token          | -                   |
-| GITHUB_EMAIL        | test@test.com  | -                   |
-| GITHUB_NAME         | "Name Surname" | -                   |
-| XDEBUG_CLIENT_HOST  | 192.168.100.1  | -                   |
-| NGINX_SSL_PORT      | 10443          | -                   |
-| MYSQL_ROOT_PASSWORD | root           | root                |
-| MYSQL_USER          | dev            | dev                 |
-| MYSQL_PASSWORD      | dev            | dev                 |
-| MYSQL_DATABASE      | test_dev       | ${PROJECT_NAME}_dev |
-| MYSQL_PORT          | 13306          | -                   |
-| SWAGGER_PORT        | 18080          | -                   |
+| Variable            | Example                                | Default             |
+|---------------------|----------------------------------------|---------------------|
+| CONTAINER_PREFIX    | local                                  | -                   |
+| PROJECT_NAME        | test                                   | -                   |
+| TIMEZONE            | Europe/Minsk                           | -                   |
+| GITHUB_USER         | user                                   | -                   |
+| GITHUB_TOKEN        | token                                  | -                   |
+| GITHUB_EMAIL        | test@test.com                          | -                   |
+| GITHUB_NAME         | "Name Surname"                         | -                   |
+| XDEBUG_CLIENT_HOST  | 192.168.100.1                          | -                   |
+| NGINX_SSL_PORT      | 10443                                  | -                   |
+| MYSQL_ROOT_PASSWORD | root                                   | root                |
+| MYSQL_USER          | dev                                    | dev                 |
+| MYSQL_PASSWORD      | dev                                    | dev                 |
+| MYSQL_DATABASE      | test_dev                               | ${PROJECT_NAME}_dev |
+| MYSQL_PORT          | 13306                                  | -                   |
+| SWAGGER_API_URL     | https://test.docker.loc:10443/api.yaml | -                   |
+| SWAGGER_PORT        | 18080                                  | -                   |
 
 ## How to access containers
 Use the following command to access your containers: `docker exec -it [CONTAINER_PREFIX]_[container_type] [bash|sh]`.  
@@ -100,14 +101,5 @@ Each extension adds an icon to your browser where you can select which functiona
 Xdebug will continue to start debugging for every request as long as the debug toggle has been enabled.
 
 ## Swagger OpenAPI
-### How to enable Swagger OpenAPI
-To enable Swagger OpenAPI:
-1. Uncomment `SWAGGER_PORT` in the `.env` file and fill it
-2. Uncomment `swagger` container in the `docker-compose.yaml` file and run it
-
 ### How to access Swagger OpenAPI
-To access it go to `http://localhost:7000`.
-
-### How to apply changes for swagger OpenAPI
-1. Run `./scripts/update.sh` to update swagger file inside Docker container
-2. Refresh the page.
+To access it go to `http://localhost:[SWAGGER_PORT]`.
