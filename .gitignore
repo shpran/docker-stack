@@ -1,16 +1,14 @@
 /.idea/
 
-/config/nginx/*
-!/config/nginx/appstream.nginx.conf
-!/config/nginx/default.nginx.template
-
-/config/ssl/*
-!/config/ssl/.gitkeep
+/services/ssl/*
+!/services/ssl/.gitkeep
 
 /services/composer/cache/*
 !/services/composer/cache/.gitkeep
+
 /services/mysql/data/*
 !/services/mysql/data/.gitkeep
+
 /services/redis/data/*
 !/services/redis/data/.gitkeep
 
