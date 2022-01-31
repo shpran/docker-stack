@@ -1,0 +1,3 @@
+upstream app_units {
+    server php:9000;
+}

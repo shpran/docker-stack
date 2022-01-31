@@ -57,7 +57,7 @@
 | MYSQL_ROOT_PASSWORD | root                                   | root                |
 | MYSQL_USER          | dev                                    | dev                 |
 | MYSQL_PASSWORD      | dev                                    | dev                 |
-| MYSQL_DATABASE      | test_dev                               | ${PROJECT_NAME}_dev |
+| MYSQL_DATABASE      | test_dev                               | -                   |
 | MYSQL_PORT          | 13306                                  | -                   |
 | SWAGGER_API_URL     | https://test.docker.loc:10443/api.yaml | -                   |
 | SWAGGER_PORT        | 18080                                  | -                   |

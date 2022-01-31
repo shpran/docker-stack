@@ -5,7 +5,7 @@ services:
         restart: always
         container_name: ${CONTAINER_PREFIX}_php
         build:
-            context: ./config/php/fpm
+            context: ./services/php/fpm
             args:
                 PROJECT_NAME: ${PROJECT_NAME}
                 GITHUB_USER: ${GITHUB_USER}
@@ -15,8 +15,8 @@ services:
         expose:
             - '9000'
         volumes:
-            - ./config/php/fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
-            - ./config/php/fpm/bashrc_config.txt:/usr/local/share/bashrc_config.txt
+            - ./services/php/fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./services/php/fpm/bashrc_config.txt:/usr/local/share/bashrc_config.txt
             - ./app:/var/www/${PROJECT_NAME}
             - ./services/composer/cache:/root/.composer/cache
         environment:
@@ -35,8 +35,8 @@ services:
         env_file:
             - .env
         volumes:
-            - ./config/nginx:/etc/nginx/templates
-            - ./config/ssl:/etc/ssl
+            - ./services/nginx:/etc/nginx/templates
+            - ./services/ssl:/etc/ssl
             - ./app:/var/www/${PROJECT_NAME}
         environment:
             - PROJECT_NAME=${PROJECT_NAME}
@@ -52,7 +52,7 @@ services:
         env_file:
             - .env
         volumes:
-            - ./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+            - ./services/mysql/config/my.cnf:/etc/mysql/conf.d/my.cnf
             - ./services/mysql/data:/var/lib/mysql
         networks:
             - default
