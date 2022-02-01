@@ -33,7 +33,7 @@ fi
 echo -e "${GREEN}OK!
 ${PINK}Looking for ssl folder...${NC}"
 
-SSL_FOLDER=$(dirname $0)/../config/ssl
+SSL_FOLDER=$(dirname $0)/../services/ssl
 
 if [[ ! -d ${SSL_FOLDER} ]]; then
     echo -e "${RED}ssl folder ${SSL_FOLDER} does not exist! Aborting...${NC}";
