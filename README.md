@@ -43,37 +43,35 @@
 9. Now you can open `https://[PROJECT_NAME].docker.loc:[NGINX_SSL_PORT]` in your browser.
 
 ## Environment variables:
-| Variable            | Example                                | Default             |
-|---------------------|----------------------------------------|---------------------|
-| CONTAINER_PREFIX    | local                                  | -                   |
-| PROJECT_NAME        | test                                   | -                   |
-| TIMEZONE            | Europe/Minsk                           | -                   |
-| GITHUB_USER         | user                                   | -                   |
-| GITHUB_TOKEN        | token                                  | -                   |
-| GITHUB_EMAIL        | test@test.com                          | -                   |
-| GITHUB_NAME         | "Name Surname"                         | -                   |
-| XDEBUG_CLIENT_HOST  | 192.168.100.1                          | -                   |
-| NGINX_SSL_PORT      | 10443                                  | -                   |
-| MYSQL_ROOT_PASSWORD | root                                   | root                |
-| MYSQL_USER          | dev                                    | dev                 |
-| MYSQL_PASSWORD      | dev                                    | dev                 |
-| MYSQL_DATABASE      | test_dev                               | -                   |
-| MYSQL_PORT          | 13306                                  | -                   |
-| SWAGGER_API_URL     | https://test.docker.loc:10443/api.yaml | -                   |
-| SWAGGER_PORT        | 18080                                  | -                   |
+| Variable            | Example                                | Default |
+|---------------------|----------------------------------------|---------|
+| CONTAINER_PREFIX    | local                                  | -       |
+| PROJECT_NAME        | test                                   | -       |
+| TIMEZONE            | Europe/Minsk                           | -       |
+| GITHUB_USER         | user                                   | -       |
+| GITHUB_TOKEN        | token                                  | -       |
+| GITHUB_EMAIL        | test@test.com                          | -       |
+| GITHUB_NAME         | "Name Surname"                         | -       |
+| XDEBUG_CLIENT_HOST  | 192.168.100.1                          | -       |
+| NGINX_PORT          | 18080                                  | -       |
+| NGINX_SSL_PORT      | 10443                                  | -       |
+| MYSQL_ROOT_PASSWORD | root                                   | root    |
+| MYSQL_USER          | dev                                    | dev     |
+| MYSQL_PASSWORD      | dev                                    | dev     |
+| MYSQL_DATABASE      | dev                                    | dev     |
+| MYSQL_PORT          | 13306                                  | -       |
+| SWAGGER_API_URL     | https://test.docker.loc:10443/api.yaml | -       |
+| SWAGGER_PORT        | 17000                                  | -       |
 
 ## How to access containers
-Use the following command to access your containers: `docker exec -it [CONTAINER_PREFIX]_[container_type] [bash|sh]`.  
-`container_type` means `php|nginx|mysql|redis|swagger` - you can find them inside your `docker-compose` file as a second part of `container_name` section.
-
-Example:
+Use the following command to access your containers:
 ```shell
-docker exec -it local_php bash
-docker exec -it local_nginx sh
-docker exec -it local_mysql bash
-docker exec -it local_redis sh
-docker exec -it local_swagger sh
-```  
+docker compose exec [container] [bash|sh]
+```
+or this command, if you are trying to access containers outside the docker-project directory:
+```shell
+docker exec -it [CONTATINER_PREFIX]_[container] [bash|sh]
+```
 
 ## Xdebug
 The functionality only gets activated when a specific trigger is present when the request starts.  
