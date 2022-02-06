@@ -1,26 +1,56 @@
 server {
+    listen 80;
     listen 443 ssl http2;
 
     server_name ${PROJECT_NAME}.docker.loc;
+
     root /var/www/${PROJECT_NAME}/public;
+    index index.php;
 
     ssl_certificate /etc/ssl/_wildcard.docker.loc.pem;
     ssl_certificate_key /etc/ssl/_wildcard.docker.loc-key.pem;
 
+    proxy_connect_timeout 300s;
+    proxy_read_timeout 300s;
+
+    gzip on;
+    gzip_comp_level 2;
+    gzip_min_length 1000;
+    gzip_proxied expired no-cache no-store private auth;
+    gzip_types text/plain application/x-javascript application/javascript text/xml text/css application/xml;
+
+    client_max_body_size 100M;
+
     location / {
-        try_files $uri @rewriteapp;
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE, PUT, HEAD, PATCH';
+            add_header 'Access-Control-Allow-Headers' 'Accept, Authorization, Cache-Control, Content-Type, DNT, If-Modified-Since, Keep-Alive, Origin, User-Agent, X-Requested-With';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+
+            return 204;
+        }
+
+        try_files $uri $uri/ /index.php?$query_string;
     }
 
-    location @rewriteapp {
-        rewrite ^(.*)$ /index.php/$1 last;
-    }
+    location ~ \.(php|yaml)$ {
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE, PUT, HEAD, PATCH' always;
+        add_header 'Access-Control-Allow-Headers' 'Accept, Authorization, Cache-Control, Content-Type, DNT, If-Modified-Since, Keep-Alive, Origin, User-Agent, X-Requested-With' always;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length, Content-Range, Content-Disposition' always;
 
-    location ~ ^/index\.php(/|$) {
-        fastcgi_pass app_units;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param HTTPS on;
+        location ~ \.php$ {
+            try_files $uri =404;
+
+            include fastcgi_params;
+            fastcgi_pass php:9000;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_read_timeout 600;
+            fastcgi_param HTTPS on;
+        }
     }
 
     error_log /var/log/${PROJECT_NAME}.error.log;

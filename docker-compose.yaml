@@ -3,54 +3,56 @@ version: '3.8'
 services:
     php:
         restart: always
-        container_name: ${CONTAINER_PREFIX}_php
+        container_name: ${CONTAINER_PREFIX:?this value must be specified}_php
         build:
             context: ./services/php/fpm
             args:
-                PROJECT_NAME: ${PROJECT_NAME}
+                PROJECT_NAME: ${PROJECT_NAME:?this value must be specified}
                 GITHUB_USER: ${GITHUB_USER}
                 GITHUB_TOKEN: ${GITHUB_TOKEN}
                 GITHUB_EMAIL: ${GITHUB_EMAIL}
                 GITHUB_NAME: ${GITHUB_NAME}
         expose:
             - '9000'
+        environment:
+            - PHP_IDE_CONFIG=serverName=${PROJECT_NAME:?this value must be specified}
+            - TIMEZONE=${TIMEZONE}
+            - XDEBUG_CLIENT_HOST=${XDEBUG_CLIENT_HOST}
         volumes:
             - ./services/php/fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
             - ./services/php/fpm/bashrc_config.txt:/usr/local/share/bashrc_config.txt
-            - ./app:/var/www/${PROJECT_NAME}
+            - ./app:/var/www/${PROJECT_NAME:?this value must be specified}
             - ./services/composer/cache:/root/.composer/cache
-        environment:
-            - PHP_IDE_CONFIG=serverName=${PROJECT_NAME}
-            - TIMEZONE=${TIMEZONE}
-            - XDEBUG_CLIENT_HOST=${XDEBUG_CLIENT_HOST}
         networks:
             - default
 
     nginx:
         restart: always
-        container_name: ${CONTAINER_PREFIX}_nginx
+        container_name: ${CONTAINER_PREFIX:?this value must be specified}_nginx
         image: nginx:1.21.6-alpine
         ports:
-            - '${NGINX_SSL_PORT}:443'
-        env_file:
-            - .env
+            - '${NGINX_PORT:?this value must be specified}:80'
+            - '${NGINX_SSL_PORT:?this value must be specified}:443'
+        environment:
+            - PROJECT_NAME=${PROJECT_NAME:?this value must be specified}
         volumes:
             - ./services/nginx:/etc/nginx/templates
             - ./services/ssl:/etc/ssl
-            - ./app:/var/www/${PROJECT_NAME}
-        environment:
-            - PROJECT_NAME=${PROJECT_NAME}
+            - ./app:/var/www/${PROJECT_NAME:?this value must be specified}
         networks:
             - default
 
     mysql:
         restart: always
-        container_name: ${CONTAINER_PREFIX}_mysql
+        container_name: ${CONTAINER_PREFIX:?this value must be specified}_mysql
         image: mysql:8.0.28
         ports:
-            - '${MYSQL_PORT}:3306'
-        env_file:
-            - .env
+            - '${MYSQL_PORT:?this value must be specified}:3306'
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?this value must be specified}
+            - MYSQL_USER=${MYSQL_USER:?this value must be specified}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD:?this value must be specified}
+            - MYSQL_DATABASE=${MYSQL_DATABASE:?this value must be specified}
         volumes:
             - ./services/mysql/config/my.cnf:/etc/mysql/conf.d/my.cnf
             - ./services/mysql/data:/var/lib/mysql
@@ -59,12 +61,12 @@ services:
 
     redis:
         restart: always
-        container_name: ${CONTAINER_PREFIX}_redis
+        container_name: ${CONTAINER_PREFIX:?this value must be specified}_redis
         image: redis:6.2.6-alpine
         expose:
             - '6379'
         volumes:
-            - ./app:/var/www/${PROJECT_NAME}
+            - ./app:/var/www/${PROJECT_NAME:?this value must be specified}
             - ./services/redis/data:/data
             - ./services/redis/config/redis.conf:/usr/local/etc/redis/redis.conf
         command: redis-server /usr/local/etc/redis/redis.conf
@@ -73,12 +75,12 @@ services:
 
     swagger:
         restart: always
-        container_name: ${CONTAINER_PREFIX}_swagger
-        image: swaggerapi/swagger-ui:v4.2.1
+        container_name: ${CONTAINER_PREFIX:?this value must be specified}_swagger
+        image: swaggerapi/swagger-ui:v4.5.0
         ports:
-            - '${SWAGGER_PORT}:8080'
+            - '${SWAGGER_PORT:?this value must be specified}:8080'
         volumes:
-            - ./app:/var/www/${PROJECT_NAME}
+            - ./app:/var/www/${PROJECT_NAME:?this value must be specified}
         environment:
             - API_URL=${SWAGGER_API_URL}
         networks:
@@ -87,4 +89,4 @@ services:
 networks:
     default:
         external: true
-        name: ${PROJECT_NAME}
+        name: ${PROJECT_NAME:?this value must be specified}
