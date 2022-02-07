@@ -32,15 +32,19 @@
    ```shell
    ./scripts/gencerts.sh
    ```
-7. Build and run docker containers:
+7. Create a network:
    ```shell
-   docker-compose build && docker-compose up -d
+   docker network create [PROJECT_NAME]
    ```
-8. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
+9. Build and run docker containers:
+   ```shell
+   docker compose build && docker compose up -d
    ```
-   127.0.0.1 test.docker.loc
-   ```
-9. Now you can open `https://[PROJECT_NAME].docker.loc:[NGINX_SSL_PORT]` in your browser.
+10. Open `hosts` file and add new host `127.0.0.1 [PROJECT_NAME].docker.loc`. For example:
+    ```
+    127.0.0.1 test.docker.loc
+    ```
+11. Now you can open `https://[PROJECT_NAME].docker.loc:[NGINX_SSL_PORT]` in your browser.
 
 ## Environment variables:
 | Variable            | Example                                | Default |
