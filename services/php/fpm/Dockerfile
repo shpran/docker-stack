@@ -37,13 +37,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && composer config --global github-protocols https \
     && composer config --global process-timeout 0
 
-RUN curl -sL https://deb.nodesource.com/setup_17.x | bash - \
-    && apt install -yq nodejs build-essential \
-    && npm install -g npm
-RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
-    && export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" \
-    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
 RUN wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash \
     && mv git-completion.bash /usr/local/share/.git-completion.bash
 
