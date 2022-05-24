@@ -1,11 +1,12 @@
 # Docker stack
 
 ## Images
-* php:8.1.2-fpm
+* php:8.1.6-fpm
 * nginx:1.21.6-alpine
-* mysql:8.0.28
-* redis:6.2.6-alpine
-* swaggerapi/swagger-ui:v4.2.1
+* mysql:8.0.29
+* redis:7.0.0-alpine
+* swaggerapi/swagger-ui:v4.11.1
+* mailhog/mailhog:v1.0.1
 
 ## Requirements
 * docker
@@ -47,25 +48,28 @@
 11. Now you can open `https://[PROJECT_NAME].docker.loc:[NGINX_SSL_PORT]` in your browser.
 
 ## Environment variables:
-| Variable            | Example                                | Default |
-|---------------------|----------------------------------------|---------|
-| CONTAINER_PREFIX    | local                                  | -       |
-| PROJECT_NAME        | test                                   | -       |
-| TIMEZONE            | Europe/Minsk                           | -       |
-| GITHUB_USER         | user                                   | -       |
-| GITHUB_TOKEN        | token                                  | -       |
-| GITHUB_EMAIL        | test@test.com                          | -       |
-| GITHUB_NAME         | "Name Surname"                         | -       |
-| XDEBUG_CLIENT_HOST  | 192.168.100.1                          | -       |
-| NGINX_PORT          | 18080                                  | -       |
-| NGINX_SSL_PORT      | 10443                                  | -       |
-| MYSQL_ROOT_PASSWORD | root                                   | root    |
-| MYSQL_USER          | dev                                    | dev     |
-| MYSQL_PASSWORD      | dev                                    | dev     |
-| MYSQL_DATABASE      | dev                                    | dev     |
-| MYSQL_PORT          | 13306                                  | -       |
-| SWAGGER_API_URL     | https://test.docker.loc:10443/api.yaml | -       |
-| SWAGGER_PORT        | 17000                                  | -       |
+| Variable            | Example                                | Default         |
+|---------------------|----------------------------------------|-----------------|
+| CONTAINER_PREFIX    | local                                  | -               |
+| PROJECT_NAME        | test                                   | -               |
+| TIMEZONE            | Europe/Minsk                           | -               |
+| GITHUB_USER         | user                                   | -               |
+| GITHUB_TOKEN        | token                                  | -               |
+| GITHUB_EMAIL        | test@test.com                          | -               |
+| GITHUB_NAME         | "Name Surname"                         | -               |
+| XDEBUG_CLIENT_HOST  | 192.168.100.1                          | -               |
+| NGINX_PORT          | 10080                                  | 80              |
+| NGINX_SSL_PORT      | 10443                                  | 443             |
+| MYSQL_ROOT_PASSWORD | root                                   | root            |
+| MYSQL_USER          | dev                                    | dev             |
+| MYSQL_PASSWORD      | dev                                    | dev             |
+| MYSQL_DATABASE      | dev                                    | dev             |
+| MYSQL_PORT          | 13306                                  | 3306            |
+| MAILHOG_PORT        | 18025                                  | 8025            |
+| SMTP_PORT           | 11025                                  | 1025            |
+| SMTP_HOSTNAME       | mailhog.example                        | mailhog.example |
+| SWAGGER_API_URL     | https://test.docker.loc:10443/api.yaml | -               |
+| SWAGGER_PORT        | 17000                                  | 7000            |
 
 ## How to access containers
 Use the following command to access your containers:
