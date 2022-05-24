@@ -12,5 +12,8 @@
 /services/redis/data/*
 !/services/redis/data/.gitkeep
 
+/services/mailhog/maildir/*
+!/services/mailhog/maildir/.gitkeep
+
 /app/
 /.env

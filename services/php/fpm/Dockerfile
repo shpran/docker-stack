@@ -1,4 +1,4 @@
-FROM php:8.1.2-fpm
+FROM php:8.1.6-fpm
 
 ENV CFLAGS="$CFLAGS -D_GNU_SOURCE"
 
@@ -74,6 +74,10 @@ RUN docker-php-ext-install pdo \
 RUN mkdir /var/www/tools
 RUN mkdir /var/www/tools/php-cs-fixer \
     && composer require --working-dir=/var/www/tools/php-cs-fixer friendsofphp/php-cs-fixer
+
+RUN wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 \
+    && chmod +x mhsendmail_linux_amd64 \
+    && mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
 
 RUN docker-php-source delete \
     && apt remove -y wget \
